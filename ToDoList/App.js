@@ -1,44 +1,52 @@
-import React from 'react';
-import { StyleSheet, View, Text, FlatList, StatusBar,} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, FlatList, StatusBar, TouchableOpacity, TextInput} from 'react-native';
 
 const tasks = [
-  { key: 'Work on expo project' },
-  { key: 'HUMANITAS ART PROJECT' },
-  { key: 'Torque Lab 9.9' },
-  { key: 'Collision Rewrite'},
-  { key: 'Assignment #8 - Computing Integrals' },
+  { id: '1', key: 'Work on expo project', completed: false },
+  { id: '2', key: 'HUMANITAS ART PROJECT', completed: false },
+  { id: '3', key: 'Torque Lab 9.9', completed: false },
+  { id: '4', key: 'Collision Rewrite', completed: false },
+  { id: '5', key: 'Assignment #8 - Computing Integrals', completed: false },
 ];
 const doneTasks = [
   
 ];
 
 export default function App() {
+
+  const [taskList, setTaskList] = useState(tasks);  
+
+  const toggleTaskCompletion = (id) => {
+    const updatedTasks = taskList.map(task =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    );
+    setTaskList(updatedTasks);
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
-      <tr>
-        <th style={styles.header}>To-Do</th>
-      </tr>
+      <View>
+        <Text style={styles.header}>To-Do</Text>
+      </View>
       <FlatList
-        data={tasks}
-        renderItem={({item}) => <Text style={styles.taskItem}>{item.key}</Text>}
+        data={taskList}
+        renderItem={({ item }) => (
+          <View style={styles.taskItem}>
+            <TouchableOpacity onPress={() => toggleTaskCompletion(item.id)} style={[styles.circle, item.completed && styles.filledCircle]} />
+            <Text>{item.key}</Text>
+          </View>
+        )}
       />
-      <tr>
-        <th style={styles.completed}> Completed </th>
-      </tr>
-      <AddTaskBar style={styles.addTaskBar}/>
+      <AddTaskBar/>
     </View>
   );
 
   function AddTaskBar() {
     return (
-      <form>
-        <input type="text" placeholder="Click here to add a task" />
-        <label>
-          <input type="checkbox" />
-          {' '}
-        </label>
-      </form>
+      <View style={styles.addTaskBar}> 
+        <TextInput placeholder="Click here to add a task" style={styles.addTaskBar} />
+      </View>
     );
   }
 }
@@ -55,7 +63,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: 'lavender', // Semi-transparent background
+    backgroundColor: 'white',
     textAlign: 'center',
     alignItems: 'center',
   },
@@ -66,7 +74,8 @@ const styles = StyleSheet.create({
     margin: 5,
     borderWidth: 3,
     borderRadius: 5,
-    borderColor: 'black', // Semi-transparent border
+    borderColor: 'black',
+    backgroundColor: 'lightgrey',
   },
   taskText: {
     color: 'white',
@@ -74,13 +83,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   addTaskBar: {
-    margin: 10,
+    padding: 10,
     position: 'absolute',
     left:0,
     bottom:0,
     right:0,
-    borderWidth: 1,
+    height: 40, 
+    borderColor: 'gray', 
+    borderWidth: 1, 
+    width: '100%',
+  },
+  circle: {
+    height: 20,
+    width: 20,
     borderRadius: 10,
+    borderWidth: 2,
     borderColor: 'blue',
-  }
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  filledCircle: {
+    backgroundColor: 'blue',
+  },
 });
