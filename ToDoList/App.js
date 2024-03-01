@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, StatusBar, TouchableOpacity, TextInput} from 'react-native';
 
 const tasks = [
-  { id: '1', key: 'Work on expo project', completed: false },
-  { id: '2', key: 'HUMANITAS ART PROJECT', completed: false },
+  { id: '1', key: 'Work on react project', completed: false },
+  { id: '2', key: 'Prep 11: Hearing & Equilibrium', completed: false },
   { id: '3', key: 'Torque Lab 9.9', completed: false },
-  { id: '4', key: 'Collision Rewrite', completed: false },
+  { id: '4', key: '9.17 Webassign', completed: false },
   { id: '5', key: 'Assignment #8 - Computing Integrals', completed: false },
 ];
 const doneTasks = [
@@ -45,7 +45,7 @@ export default function App() {
   function AddTaskBar() {
     return (
       <View style={styles.addTaskBar}> 
-        <TextInput placeholder="Click here to add a task" style={styles.addTaskBar} />
+        <TextInput placeholder="Click here to add a task"/>
       </View>
     );
   }
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     fontSize: 30,
+    paddingTop: 60,
   },
   container: {
     flex: 1,
@@ -84,14 +85,13 @@ const styles = StyleSheet.create({
   },
   addTaskBar: {
     padding: 10,
-    position: 'absolute',
-    left:0,
-    bottom:0,
-    right:0,
+    positionX: 0,
     height: 40, 
     borderColor: 'gray', 
-    borderWidth: 1, 
-    width: '100%',
+    borderWidth: 2,
+    width: '90%',
+    marginBottom: 50,
+    borderRadius: 5,
   },
   circle: {
     height: 20,
